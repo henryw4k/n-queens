@@ -162,11 +162,13 @@ window.findNQueensSolution = function(n) {
   }
   if(n === 0){
     solution = [];
-  } else if (n === 1 || n >= 4) {
-    search(board, rowIndex, columnIndex, countPieces);
+  } else if (n === 2) {
+    solution = [[],[]];
+  } else if (n === 3) {
+    solution = [[],[],[]];
   }
   else {
-    solution = [];
+    search(board, rowIndex, columnIndex, countPieces);
   }
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
@@ -175,7 +177,58 @@ window.findNQueensSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0;
+  var board = new Board({n:n});
+
+  var rowIndex = 0;
+  var columnIndex = 0;
+  var countPieces = 0;
+  var search = function(board, rowIndex, columnIndex, countPieces) {
+    //debugger;
+    board.get(rowIndex)[columnIndex] = 1;
+    countPieces++;
+
+    if (board.hasAnyRowConflicts() || board.hasAnyColConflicts()
+        || board.hasAnyMinorDiagonalConflicts() || board.hasAnyMajorDiagonalConflicts()) {
+      board.get(rowIndex)[columnIndex] = 0;
+      countPieces--;
+      if (columnIndex + 1 === n) {
+        if (rowIndex + 1 === n) {
+          return;
+        }
+        rowIndex++;
+        columnIndex = 0;
+        search(board, rowIndex, columnIndex, countPieces);
+      } else {
+        //columnIndex++;
+        search(board, rowIndex, ++columnIndex, countPieces);
+      }
+    } else {
+      if (countPieces === n) {
+        solutionCount++;
+        //search(board, rowIndex, columnIndex, countPieces);
+        return;
+      }
+      if (rowIndex + 1 === n) {
+        return;
+      }
+      rowIndex++;
+      columnIndex = 0;
+      for (var i = 0; i < n; i++) {
+        search(board, rowIndex, columnIndex + i, countPieces);
+      }
+    }
+    //function(){}()
+  }
+  debugger;
+  if(n === 0){
+    solutionCount = 1;
+  } else if (n === 2 || n === 3) {
+    solutionCount = 0;;
+  }
+  else {
+    search(board, rowIndex, columnIndex, countPieces);
+  }
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;

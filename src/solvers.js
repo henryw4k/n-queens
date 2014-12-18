@@ -21,17 +21,14 @@ window.findNRooksSolution = function(n) {
   var columnIndex = 0;
   var countPieces = 0;
   var search = function(board, rowIndex, columnIndex, countPieces) {
-<<<<<<< HEAD
     if (solution.length > 0) {
       return;
     }
-=======
->>>>>>> 2586bef9a3e411143f54679360ae1aa79f0890b5
     //debugger;
     board.get(rowIndex)[columnIndex] = 1;
     countPieces++;
 
-    if (board.hasAnyRowConflicts() || board.hasAnyColConflicts()) {
+    if (board.hasAnyColConflicts()) {
       board.get(rowIndex)[columnIndex] = 0;
       countPieces--;
       if (columnIndex + 1 === n) {
@@ -42,19 +39,13 @@ window.findNRooksSolution = function(n) {
         columnIndex = 0;
         search(board, rowIndex, columnIndex, countPieces);
       } else {
-<<<<<<< HEAD
         columnIndex++;
         search(board, rowIndex, columnIndex, countPieces);
         return;
-=======
-        //columnIndex++;
-        search(board, rowIndex, ++columnIndex, countPieces);
->>>>>>> 2586bef9a3e411143f54679360ae1aa79f0890b5
       }
     } else {
       if (countPieces === n) {
         for (var i = 0; i < n; i++) {
-<<<<<<< HEAD
           var arr = board.get(i).slice();
           solution.push(arr);
         }
@@ -63,7 +54,11 @@ window.findNRooksSolution = function(n) {
         return;
       }
       var nextRow = rowIndex + 1;
-      search(board, nextRow, 0, countPieces);
+      if (columnIndex === 0) {
+        search(board, nextRow, 1, countPieces);
+      } else {
+        search(board, nextRow, 0, countPieces);
+      }
       if (columnIndex + 1 < n) {
         board.get(rowIndex)[columnIndex] = 0;
         countPieces--;
@@ -85,22 +80,6 @@ window.findNRooksSolution = function(n) {
   else {
     search(board, rowIndex, columnIndex, countPieces);
   }
-=======
-          solution.push(board.get(i));
-        }
-        return;
-      }
-      if (rowIndex + 1 === n) {
-        return;
-      }
-      rowIndex++;
-      columnIndex = 0;
-      search(board, rowIndex, columnIndex, countPieces);
-    }
-    //function(){}()
-  }
-  search(board, rowIndex, columnIndex, countPieces);
->>>>>>> 2586bef9a3e411143f54679360ae1aa79f0890b5
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
@@ -121,7 +100,7 @@ window.countNRooksSolutions = function(n) {
     board.get(rowIndex)[columnIndex] = 1;
     countPieces++;
 
-    if (board.hasAnyRowConflicts() || board.hasAnyColConflicts()) {
+    if (board.hasAnyColConflicts()) {
       board.get(rowIndex)[columnIndex] = 0;
       countPieces--;
       if (columnIndex + 1 === n) {
@@ -132,26 +111,24 @@ window.countNRooksSolutions = function(n) {
         columnIndex = 0;
         search(board, rowIndex, columnIndex, countPieces);
       } else {
-<<<<<<< HEAD
         columnIndex++;
         search(board, rowIndex, columnIndex, countPieces);
         return;
-=======
-        //columnIndex++;
-        search(board, rowIndex, ++columnIndex, countPieces);
->>>>>>> 2586bef9a3e411143f54679360ae1aa79f0890b5
       }
     } else {
       if (countPieces === n) {
         solutionCount++;
-<<<<<<< HEAD
         board.get(rowIndex)[columnIndex] = 0;
         countPieces--;
         return;
       }
       if (rowIndex + 1 < n) {
         var nextRow = rowIndex + 1;
-        search(board, nextRow, 0, countPieces);
+        if (columnIndex === 0) {
+          search(board, nextRow, 1, countPieces);
+        } else {
+          search(board, nextRow, 0, countPieces);
+        }
       }
       if (columnIndex + 1 < n) {
         board.get(rowIndex)[columnIndex] = 0;
@@ -171,23 +148,6 @@ window.countNRooksSolutions = function(n) {
   } else {
     search(board, rowIndex, columnIndex, countPieces);
   }
-=======
-        //search(board, rowIndex, columnIndex, countPieces);
-        return;
-      }
-      if (rowIndex + 1 === n) {
-        return;
-      }
-      rowIndex++;
-      columnIndex = 0;
-      for (var i = 0; i < n; i++) {
-        search(board, rowIndex, columnIndex + i, countPieces);
-      }
-    }
-    //function(){}()
-  }
-  search(board, rowIndex, columnIndex, countPieces);
->>>>>>> 2586bef9a3e411143f54679360ae1aa79f0890b5
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
@@ -197,29 +157,20 @@ window.countNRooksSolutions = function(n) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-<<<<<<< HEAD
   var solution = [];
-=======
-  var solution = []; //fixme
-
->>>>>>> 2586bef9a3e411143f54679360ae1aa79f0890b5
   var board = new Board({n:n});
 
   var rowIndex = 0;
   var columnIndex = 0;
   var countPieces = 0;
   var search = function(board, rowIndex, columnIndex, countPieces) {
-<<<<<<< HEAD
     if (solution.length > 0) {
       return;
     }
-=======
->>>>>>> 2586bef9a3e411143f54679360ae1aa79f0890b5
     //debugger;
     board.get(rowIndex)[columnIndex] = 1;
     countPieces++;
 
-<<<<<<< HEAD
     var flipBoard = new Board({n:n});
     for (var i = 0; i < n; i++) {
       for (var j = 0; j < n; j++) {
@@ -227,9 +178,7 @@ window.findNQueensSolution = function(n) {
       }
     }
 
-    if (board.hasAnyRowConflicts() || board.hasAnyColConflicts()
-      || board.hasAnyMajorDiagonalConflicts() || board.hasAnyMinorDiagonalConflicts()
-      || flipBoard.hasAnyMajorDiagonalConflicts() || flipBoard.hasAnyMinorDiagonalConflicts()) {
+    if (board.hasAnyConflicts() || flipBoard.hasAnyMajorDiagonalConflicts() || flipBoard.hasAnyMinorDiagonalConflicts()) {
         board.get(rowIndex)[columnIndex] = 0;
         countPieces--;
         if (columnIndex + 1 === n) {
@@ -256,7 +205,13 @@ window.findNQueensSolution = function(n) {
         }
         if (rowIndex + 1 < n) {
           var nextRow = rowIndex + 1;
-          search(board, nextRow, 0, countPieces);
+          if (columnIndex === 0) {
+            search(board, nextRow, 2, countPieces);
+          } else if (columnIndex === 1) {
+            search(board, nextRow, 3, countPieces);
+          } else {
+            search(board, nextRow, 0, countPieces);
+          }
         }
         if (columnIndex + 1 < n) {
           board.get(rowIndex)[columnIndex] = 0;
@@ -287,51 +242,6 @@ window.findNQueensSolution = function(n) {
     search(board, 0, 0, 0);
   }
 
-=======
-    if (board.hasAnyRowConflicts() || board.hasAnyColConflicts()
-        || board.hasAnyMinorDiagonalConflicts() || board.hasAnyMajorDiagonalConflicts()) {
-      board.get(rowIndex)[columnIndex] = 0;
-      countPieces--;
-      if (columnIndex + 1 === n) {
-        if (rowIndex + 1 === n) {
-          return;
-        }
-        rowIndex++;
-        columnIndex = 0;
-        search(board, rowIndex, columnIndex, countPieces);
-      } else {
-        //columnIndex++;
-        search(board, rowIndex, ++columnIndex, countPieces);
-      }
-    } else {
-      if (countPieces === n) {
-        for (var i = 0; i < n; i++) {
-          solution.push(board.get(i));
-        }
-        return;
-      }
-      if (rowIndex + 1 === n) {
-        return;
-      }
-      rowIndex++;
-      columnIndex = 0;
-      for (var i = 0; i < n; i++) {
-        search(board, rowIndex, columnIndex + i, countPieces);
-      }
-    }
-    //function(){}()
-  }
-  if(n === 0){
-    solution = [];
-  } else if (n === 2) {
-    solution = [[],[]];
-  } else if (n === 3) {
-    solution = [[],[],[]];
-  }
-  else {
-    search(board, rowIndex, columnIndex, countPieces);
-  }
->>>>>>> 2586bef9a3e411143f54679360ae1aa79f0890b5
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
 };
@@ -346,7 +256,6 @@ window.countNQueensSolutions = function(n) {
   var columnIndex = 0;
   var countPieces = 0;
   var search = function(board, rowIndex, columnIndex, countPieces) {
-<<<<<<< HEAD
     //debugger;
     board.get(rowIndex)[columnIndex] = 1;
     countPieces++;
@@ -358,9 +267,7 @@ window.countNQueensSolutions = function(n) {
       }
     }
 
-    if (board.hasAnyRowConflicts() || board.hasAnyColConflicts()
-    || board.hasAnyMajorDiagonalConflicts() || board.hasAnyMinorDiagonalConflicts()
-    || flipBoard.hasAnyMajorDiagonalConflicts() || flipBoard.hasAnyMinorDiagonalConflicts()) {
+    if (board.hasAnyConflicts() || flipBoard.hasAnyMajorDiagonalConflicts() || flipBoard.hasAnyMinorDiagonalConflicts()) {
       board.get(rowIndex)[columnIndex] = 0;
       countPieces--;
       if (columnIndex + 1 === n) {
@@ -374,40 +281,23 @@ window.countNQueensSolutions = function(n) {
         columnIndex++;
         search(board, rowIndex, columnIndex, countPieces);
         return;
-=======
-    board.get(rowIndex)[columnIndex] = 1;
-    countPieces++;
-
-    if (board.hasAnyRowConflicts() || board.hasAnyColConflicts()
-        || board.hasAnyMinorDiagonalConflicts() || board.hasAnyMajorDiagonalConflicts()) {
-      board.get(rowIndex)[columnIndex] = 0;
-      countPieces--;
-      if (columnIndex + 1 >= n) {
-        // if (rowIndex + 1 >= n) {
-        //   return;
-        // }
-        // rowIndex++;
-        // columnIndex = 0;
-        // search(board, rowIndex, columnIndex, countPieces);
-        return;
-      } else {
-        //columnIndex++;
-
-        search(board, rowIndex, ++columnIndex, countPieces);
-
->>>>>>> 2586bef9a3e411143f54679360ae1aa79f0890b5
       }
     } else {
       if (countPieces === n) {
         solutionCount++;
-<<<<<<< HEAD
         board.get(rowIndex)[columnIndex] = 0;
         countPieces--;
         return;
       }
       if (rowIndex + 1 < n) {
         var nextRow = rowIndex + 1;
-        search(board, nextRow, 0, countPieces);
+        if (columnIndex === 0) {
+          search(board, nextRow, 2, countPieces);
+        } else if (columnIndex === 1) {
+          search(board, nextRow, 3, countPieces);
+        } else {
+          search(board, nextRow, 0, countPieces);
+        }
       }
       if (columnIndex + 1 < n) {
         board.get(rowIndex)[columnIndex] = 0;
@@ -427,39 +317,6 @@ window.countNQueensSolutions = function(n) {
   } else if (n === 2 || n === 3) {
     solutionCount = 0;
   } else {
-=======
-        //search(board, rowIndex, columnIndex, countPieces);
-        if (n === 4); {
-        var solution = [];
-        for (var i = 0; i < n; i++) {
-          solution.push(board.get(i));
-        }
-        console.log(solution);
-        }
-        return;
-      }
-      if (rowIndex + 1 === n) {
-        return;
-      }
-      rowIndex++;
-      columnIndex = 0;
-      for (var i = 0; i < n; i++) {
-        search(board, rowIndex, columnIndex + i, countPieces);
-      }
-    }
-    //function(){}()
-  }
-  if (n === 4) {
-    // debugger;
-
-  }
-  if(n === 0){
-    solutionCount = 1;
-  } else if (n === 2 || n === 3) {
-    solutionCount = 0;;
-  }
-  else {
->>>>>>> 2586bef9a3e411143f54679360ae1aa79f0890b5
     search(board, rowIndex, columnIndex, countPieces);
   }
 

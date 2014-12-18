@@ -156,7 +156,9 @@ window.findNQueensSolution = function(n) {
       }
       rowIndex++;
       columnIndex = 0;
-      search(board, rowIndex, columnIndex, countPieces);
+      for (var i = 0; i < n; i++) {
+        search(board, rowIndex, columnIndex + i, countPieces);
+      }
     }
     //function(){}()
   }
@@ -184,7 +186,6 @@ window.countNQueensSolutions = function(n) {
   var columnIndex = 0;
   var countPieces = 0;
   var search = function(board, rowIndex, columnIndex, countPieces) {
-    //debugger;
     board.get(rowIndex)[columnIndex] = 1;
     countPieces++;
 
@@ -192,21 +193,31 @@ window.countNQueensSolutions = function(n) {
         || board.hasAnyMinorDiagonalConflicts() || board.hasAnyMajorDiagonalConflicts()) {
       board.get(rowIndex)[columnIndex] = 0;
       countPieces--;
-      if (columnIndex + 1 === n) {
-        if (rowIndex + 1 === n) {
-          return;
-        }
-        rowIndex++;
-        columnIndex = 0;
-        search(board, rowIndex, columnIndex, countPieces);
+      if (columnIndex + 1 >= n) {
+        // if (rowIndex + 1 >= n) {
+        //   return;
+        // }
+        // rowIndex++;
+        // columnIndex = 0;
+        // search(board, rowIndex, columnIndex, countPieces);
+        return;
       } else {
         //columnIndex++;
+
         search(board, rowIndex, ++columnIndex, countPieces);
+
       }
     } else {
       if (countPieces === n) {
         solutionCount++;
         //search(board, rowIndex, columnIndex, countPieces);
+        if (n === 4); {
+        var solution = [];
+        for (var i = 0; i < n; i++) {
+          solution.push(board.get(i));
+        }
+        console.log(solution);
+        }
         return;
       }
       if (rowIndex + 1 === n) {
@@ -220,7 +231,10 @@ window.countNQueensSolutions = function(n) {
     }
     //function(){}()
   }
-  debugger;
+  if (n === 4) {
+    // debugger;
+
+  }
   if(n === 0){
     solutionCount = 1;
   } else if (n === 2 || n === 3) {

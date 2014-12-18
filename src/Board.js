@@ -129,10 +129,19 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      // var counter = 0;
+      // for (var i = 0; i < this.get('n') - majorDiagonalColumnIndexAtFirstRow; i++) {
+      //   counter += this.get(i)[majorDiagonalColumnIndexAtFirstRow];
+      //   majorDiagonalColumnIndexAtFirstRow++;
+      // }
+      // return counter > 1;
       var counter = 0;
-      for (var i = 0; i < this.get('n') - majorDiagonalColumnIndexAtFirstRow; i++) {
-        counter += this.get(i)[majorDiagonalColumnIndexAtFirstRow];
-        majorDiagonalColumnIndexAtFirstRow++;
+      var col = majorDiagonalColumnIndexAtFirstRow;
+      var row = 0;
+      while(col < this.get('n') && row < this.get('n')){
+        counter += this.get(row)[col];
+        row++;
+        col++;
       }
       return counter > 1;
     },
